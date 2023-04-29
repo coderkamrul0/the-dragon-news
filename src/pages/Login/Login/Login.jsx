@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from "react";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 // import './Login.css'
 
@@ -8,6 +9,10 @@ const Login = () => {
 
   const {login} = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log('login page location', location);
+  const from = location.state?.from?.pathname || '/category/0'
+
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -20,7 +25,7 @@ const Login = () => {
     .then((result) => {
       // Signed in 
       console.log(result);
-      navigate('/category/0')
+      navigate(from, { replace: true})
       // ...
     })
     .catch((error) => {
