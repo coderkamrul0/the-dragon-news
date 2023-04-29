@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
 // import './Login.css'
 
 const Login = () => {
+
+  const {login} = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email,password);
+
+    login(email,password)
+    .then((result) => {
+      // Signed in 
+      console.log(result);
+      navigate('/category/0')
+      // ...
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  }
+
   return (
     <Container>
           <Row className="vh-800 mt-5 d-flex justify-content-center align-items-center">
@@ -15,7 +40,7 @@ const Login = () => {
                       Login Your Account
                     </h4>
                     <div className="mb-3">
-                      <Form>
+                      <Form onSubmit={handleLogin}>
                        
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label className="text-center">

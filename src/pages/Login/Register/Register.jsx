@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const Register = () => {
+
+  const {createUser} = useContext(AuthContext);
+
+  const handleRegister = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value
+    const photo = form.photo.value
+    const email = form.email.value
+    const password = form.password.value
+    console.log(name,photo,email,password);
+
+    createUser(email,password)
+    .then((result) => {
+      const createdUser = result.user
+      console.log(createdUser);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+
+  }
+
   return (
     <>
       <div>
@@ -16,7 +40,7 @@ const Register = () => {
                       Register Your Account
                     </h4>
                     <div className="mb-3">
-                      <Form>
+                      <Form onSubmit={handleRegister}>
                         <Form.Group className="mb-3" controlId="Name">
                           <Form.Label className="text-center">Name</Form.Label>
                           <Form.Control 
@@ -33,7 +57,7 @@ const Register = () => {
                           <Form.Label>Photo URl</Form.Label>
                           <Form.Control
                             type="text"
-                            name="name"
+                            name="photo"
                             placeholder="Photo url"
                           />
                         </Form.Group>
