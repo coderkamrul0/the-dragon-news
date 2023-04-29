@@ -10,7 +10,6 @@ const Login = () => {
   const {login} = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log('login page location', location);
   const from = location.state?.from?.pathname || '/category/0'
 
 
@@ -19,7 +18,6 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email,password);
 
     login(email,password)
     .then((result) => {
